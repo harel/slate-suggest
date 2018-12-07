@@ -1,0 +1,5 @@
+[
+    {"key": "First Name", "value": "{{first_name}}"},
+    {"key": "Last Name", "value": "{{last_name}}"},
+    {"key": "Company Name", "value": "{{company_name}}"}
+]
