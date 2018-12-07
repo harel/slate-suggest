@@ -31,7 +31,7 @@ function getCurrentWord(text, index, initialIndex) {
 
 const testPI = {
   onChange: (editor) => {
-    console.log("TESTPI",editor.change())
+    console.log("TESTPI",editor)
   }
 }
 
