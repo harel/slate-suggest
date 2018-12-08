@@ -61,7 +61,6 @@ class Example extends React.Component {
   }
 
   updateState = (state, callback) => {
-    console.log("updatestate with", state, callback)
     this.setState(state, callback);
   }
 
@@ -78,7 +77,6 @@ class Example extends React.Component {
   };
 
   onChange = ({value}) => {
-    console.log("TOP ON CHANGE VALUE", value)
     this.setState({ value })
   }
 
