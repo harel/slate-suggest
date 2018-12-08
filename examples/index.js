@@ -30,8 +30,8 @@ function getCurrentWord(text, index, initialIndex) {
 }
 
 const testPI = {
-  onChange: (editor) => {
-    console.log("TESTPI",editor)
+  onChange: ({value}) => {
+    console.log("TESTPI",value)
   }
 }
 
@@ -39,7 +39,8 @@ class Example extends React.Component {
 
   constructor(props) {
     super(props);
-
+    this.lastInputValue = undefined;
+    this.editorRef = React.createRef();
     this.suggestPlugin = SuggestPlugin({
       context: SuggestionsContext,
       trigger: '@',
@@ -49,16 +50,18 @@ class Example extends React.Component {
         const suggestions = this.search(query);
         return suggestions;
       },
-      updateState: this.updateState
+      updateState: this.updateState,
+      editorRef: this.editorRef,
     })
 
     this.plugins = [
-      testPI,
+      // testPI,
       this.suggestPlugin
     ]
   }
 
   updateState = (state, callback) => {
+    console.log("updatestate with", state, callback)
     this.setState(state, callback);
   }
 
@@ -75,7 +78,7 @@ class Example extends React.Component {
   };
 
   onChange = ({value}) => {
-    console.log("VALUE", value)
+    console.log("TOP ON CHANGE VALUE", value)
     this.setState({ value })
   }
 
@@ -98,6 +101,7 @@ class Example extends React.Component {
           <Editor
             spellCheck
             autoFocus
+            ref={this.editorRef}
             plugins={this.plugins}
             value={value}
             onChange={this.onChange}
