@@ -60,6 +60,7 @@ class Example extends React.Component {
     ]
   }
 
+
   updateState = (state, callback) => {
     this.setState(state, callback);
   }
@@ -73,7 +74,8 @@ class Example extends React.Component {
   state = {
     value: Value.fromJSON(initialState),
     results: Tags,
-    updateSuggestions: this.setSuggestions
+    updateSuggestions: this.setSuggestions,
+    activeIndex: 1,
   };
 
   onChange = ({value}) => {
@@ -85,7 +87,7 @@ class Example extends React.Component {
    * @param  {string} query
    */
   search = (query) => {
-    const suggestions = query ? Tags.filter((item) => item.key.startsWith(query)) : Tags;
+    const suggestions = query ? Tags.filter((item) => item.key.toUpperCase().startsWith(query.toUpperCase())) : Tags;
     this.setState({
       results: suggestions
     })
