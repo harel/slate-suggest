@@ -6,8 +6,13 @@ import { Editor } from 'slate-react';
 import { Value } from 'slate';
 import {SuggestionsContext} from '../lib/context';
 import Tags from './tags.json';
-
-
+import {DEFAULT_SELECTOR_POS, CONTEXT_MARK_CLASS, CONTEXT_MARK_TYPE} from '../lib/constants';
+import {
+    getInput,
+    hasValidAncestors,
+    getMarkBoundingRect,
+} from '../lib/utils';
+import Suggestions from '../lib/suggestions';
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -95,6 +100,8 @@ class Example extends React.Component {
 
   render = () => {
     const {value} = this.state;
+    const suggestPos = getMarkBoundingRect(CONTEXT_MARK_CLASS, DEFAULT_SELECTOR_POS);
+console.log('state', suggestPos, this.state)
     return (
       <div>
         <SuggestionsContext.Provider value={this.state}>
@@ -105,6 +112,14 @@ class Example extends React.Component {
             plugins={this.plugins}
             value={value}
             onChange={this.onChange}
+            renderMark={this.renderMark}
+          />
+          <Suggestions
+              anchor={CONTEXT_MARK_CLASS}
+              options={this.state.results}
+              editor={this.editorRef}
+              activeIndex={this.state.activeIndex}
+              position={suggestPos}
           />
         </SuggestionsContext.Provider>
       </div>
