@@ -1,5 +1,8 @@
 [
     {"key": "First Name", "value": "{{first_name}}"},
+    {"key": "Full Name", "value": "{{full_name}}"},
     {"key": "Last Name", "value": "{{last_name}}"},
+    {"key": "Location", "value": "{{location}}"},
+    {"key": "Likeness", "value": "{{likeness}}"},
     {"key": "Company Name", "value": "{{company_name}}"}
 ]
