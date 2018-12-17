@@ -31,6 +31,17 @@ class Example extends React.Component {
             onChange: (state, callback) => {
                 this.setState(state, callback);
             },
+            onNavigate: (direction) => {
+                let activeIndex = this.state.activeIndex + direction;
+                if (activeIndex < 0) {
+                    activeIndex = 0;
+                } else if (activeIndex >= this.state.results.length) {
+                    activeIndex = this.state.results.length - 1;
+                }
+                this.setState({
+                    activeIndex
+                })
+            }
         })
 
         this.plugins = [
@@ -41,7 +52,7 @@ class Example extends React.Component {
     state = {
         value: Value.fromJSON(initialState),
         results: Tags, 
-        activeIndex: null,
+        activeIndex: -1,
     };
 
     onChange = ({value}) => {
