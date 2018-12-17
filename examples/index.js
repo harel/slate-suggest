@@ -6,7 +6,7 @@ import { Editor } from 'slate-react';
 import { Value } from 'slate';
 import {SuggestionsContext} from '../lib/context';
 import Tags from './tags.json';
- 
+
 
 class Example extends React.Component {
 
@@ -24,23 +24,27 @@ class Example extends React.Component {
             // The full regex of what qualifies a suggestion lookup
             triggerRegEx: /@(\S*)$/,
             // handle requests to search for suggestion values
-            onSearch: (editor, query) => { 
+            onSearch: (editor, query) => {
                 return this.search(query);
             },
             // handle change events within the plugin, accepting  new state and an optional callback
             onChange: (state, callback) => {
                 this.setState(state, callback);
             },
-            onNavigate: (direction) => {
+            onNavigate: (direction, selected) => {
                 let activeIndex = this.state.activeIndex + direction;
                 if (activeIndex < 0) {
                     activeIndex = 0;
                 } else if (activeIndex >= this.state.results.length) {
                     activeIndex = this.state.results.length - 1;
                 }
-                this.setState({
-                    activeIndex
-                })
+                if (!selected) {
+                  this.setState({
+                      activeIndex
+                  })
+                } else {
+                  this.editorRef.current.insertTag(this.state.results[activeIndex]);
+                }
             }
         })
 
@@ -48,11 +52,12 @@ class Example extends React.Component {
             this.suggestPlugin
         ]
 	}
-  
+
     state = {
         value: Value.fromJSON(initialState),
-        results: Tags, 
+        results: Tags,
         activeIndex: -1,
+        selected: false,
     };
 
     onChange = ({value}) => {
